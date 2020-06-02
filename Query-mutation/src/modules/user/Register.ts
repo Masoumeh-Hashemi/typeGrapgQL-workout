@@ -15,9 +15,9 @@ export class RegisterResolver {
   }
   @Mutation(() => User)
   async register(@Arg("data"){
-    email,
     firstName,
     lastName,
+    email,
     password
   }:RegisterInput,
 

@@ -8,6 +8,7 @@ import connectRedis from "connect-redis";
 import session from 'express-session'; 
 import { redis } from "./redis";
 import cors from 'cors';
+import { LoginResolver } from "./modules/user/Login";
 // @Resolver()
 // class HelloResolver {
 //   @Query(() => String)
@@ -30,7 +31,7 @@ const main = async ()=>{
     await createConnection();
     const schema = await buildSchema({
         // resolvers: [HelloResolver,ByeResolver],
-        resolvers:[RegisterResolver]
+        resolvers:[RegisterResolver,LoginResolver]
       });
     const apolloServer = new ApolloServer({
         schema, 
@@ -68,7 +69,7 @@ const main = async ()=>{
 
     apolloServer.applyMiddleware({app})
 
-    app.listen(4001,()=> {
+    app.listen(4000,()=> {
         console.log('Hi i"m listening');
     });
 };
