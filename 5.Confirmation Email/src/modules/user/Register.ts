@@ -3,6 +3,8 @@ import {User} from "../../entity/User"
 import bcrypt from 'bcryptjs'; 
 import { RegisterInput } from "./register/RegisterInput";
 import { isAuth } from "../middleware/isAuth";
+import { sendEmail } from "../utils/sendEmail";
+import { createConfirmationUrl } from "../utils/createConfirmtionUrl";
 @Resolver(User)
 export class RegisterResolver {
   // @Authorized()
@@ -35,6 +37,7 @@ export class RegisterResolver {
       password:hashedPassword
     }).save();
 
+    await sendEmail(email,await createConfirmationUrl(user.id));
     return user;
 
   }

@@ -1,3 +1,8 @@
+/*# Author: @Masoumeh-Hashemi
+# Date: June 6 2020
+# Description: First html exersize for satek comp,designig a sample page*/
+
+
 import { ApolloServer} from "apollo-server-express";
 import Express from "express";
 import { buildSchema, formatArgumentValidationError} from "type-graphql";
@@ -10,6 +15,7 @@ import { redis } from "./redis";
 import cors from 'cors';
 import { LoginResolver } from "./modules/user/Login";
 import { MeResolver } from "./modules/user/register/Me";
+import { ConfirmUserResolver } from "./modules/user/ConfirmUser";
 // @Resolver()
 // class HelloResolver {
 //   @Query(() => String)
@@ -28,11 +34,10 @@ import { MeResolver } from "./modules/user/register/Me";
 // }
 
 const main = async ()=>{
-
     await createConnection();
     const schema = await buildSchema({
         // resolvers: [HelloResolver,ByeResolver],
-        resolvers:[MeResolver,RegisterResolver,LoginResolver],
+        resolvers:[MeResolver,RegisterResolver,LoginResolver,ConfirmUserResolver],
         authChecker: ({context: {req}}) =>{
             return !!req.session.userId;
         }
@@ -76,6 +81,8 @@ const main = async ()=>{
 
     app.listen(4000,()=> {
         console.log('Hi i"m listening');
+
+        
     });
 };
 
